@@ -200,7 +200,7 @@ export function Terminal({ posts, readme }: { posts: TermPost[]; readme: string 
       output: (
         <div>
           <div className="tx-bright">Portfolio-Terminal [Version 0.1.0]</div>
-          <div className="tx-dim">(c) 2026 Ayush Rai. Fewer pixels, more signal.</div>
+          <div className="tx-dim">(c) 2026 Ayush Rai. Can you count the pixels?</div>
         </div>
       ),
     });
