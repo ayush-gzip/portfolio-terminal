@@ -9,7 +9,7 @@ const SITE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: "Ayush Rai — terminal", template: "%s · Ayush Rai" },
+  title: { default: "Ayush Rai | terminal", template: "%s · Ayush Rai" },
   description: "I get bored and I build. I get bored a lot.",
 };
 
