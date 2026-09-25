@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       description: post.meta.description,
       type: "article",
       publishedTime: post.meta.date,
+      images: [{ url: "/og.png", width: 1200, height: 630 }],
     },
   };
 }

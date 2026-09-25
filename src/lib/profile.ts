@@ -12,7 +12,7 @@ export const profile = {
 
   githubUsername: "ayush-gzip",
   githubUrl: "https://github.com/ayush-gzip",
-  linkedinUrl: "https://www.linkedin.com/in/ayush-rai-815110108",
+  linkedinUrl: "https://www.linkedin.com/in/ayush-gzip",
 
   // Snapshot of the real profile (2026-09-09); the github command fetches live
   // data from api.github.com on open and only falls back to this offline.

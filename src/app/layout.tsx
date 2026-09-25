@@ -11,6 +11,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: "Ayush Rai | terminal", template: "%s · Ayush Rai" },
   description: "I get bored and I build. I get bored a lot.",
+  openGraph: {
+    title: "Ayush Rai | terminal",
+    description: "I get bored and I build. I get bored a lot.",
+    url: "/",
+    siteName: "Ayush Rai",
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Ayush Rai terminal" }],
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
