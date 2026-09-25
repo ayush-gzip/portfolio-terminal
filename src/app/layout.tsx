@@ -10,7 +10,7 @@ const SITE_URL = getSiteUrl();
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: "Ayush Rai — terminal", template: "%s · Ayush Rai" },
-  description: "The personal terminal of Ayush Rai: writing, projects, and work, one command at a time.",
+  description: "I get bored and I build. I get bored a lot.",
 };
 
 export const viewport: Viewport = {
