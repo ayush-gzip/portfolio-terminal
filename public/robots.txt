@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# The production build adds Sitemap using NEXT_PUBLIC_SITE_URL.

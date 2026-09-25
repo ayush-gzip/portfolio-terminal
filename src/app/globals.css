@@ -1,0 +1,238 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme inline {
+  --font-mono: var(--font-terminal), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* ASCII art needs box/block/shade glyphs that Share Tech Mono lacks; fall back
+     to a system mono that has full Unicode block coverage so the logo never tofus. */
+  --font-art: ui-monospace, SFMono-Regular, Menlo, "DejaVu Sans Mono", Consolas, monospace;
+}
+
+@theme {
+  /* used by the shareable /blog reader pages */
+  --color-ink: #d7ffe6;
+  --color-muted: #4f9e6d;
+  --color-accent: #58ff9b;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: #05070a;
+  overscroll-behavior: none;
+}
+
+/* ---- Terminal palette. Vars are redefined per theme on .terminal[data-theme] ---- */
+.terminal {
+  --term-bg: #06090a;
+  --term-fg: #46e07a;
+  --term-dim: #2b8f52;
+  --term-bright: #b8ffd0;
+  --term-accent: #62ff9e;
+  --term-warn: #ffd166;
+  --term-err: #ff6b6b;
+  --term-link: #7ad0ff;
+}
+.terminal[data-theme="amber"] {
+  --term-bg: #0b0803;
+  --term-fg: #ffb000;
+  --term-dim: #a06f00;
+  --term-bright: #ffe0a3;
+  --term-accent: #ffc63a;
+  --term-warn: #ffe066;
+  --term-err: #ff7a5c;
+  --term-link: #ffd27a;
+}
+.terminal[data-theme="matrix"] {
+  --term-bg: #000400;
+  --term-fg: #00ff41;
+  --term-dim: #0a7a2a;
+  --term-bright: #9dffb8;
+  --term-accent: #00ff41;
+  --term-warn: #b6ff00;
+  --term-err: #ff5555;
+  --term-link: #5affa0;
+}
+/* ---- Catppuccin flavors. accent=green (prompt), bright=mauve (headings) ---- */
+.terminal[data-theme="mocha"] {
+  --term-bg: #1e1e2e;
+  --term-fg: #cdd6f4;
+  --term-dim: #a6adc8;
+  --term-bright: #cba6f7;
+  --term-accent: #a6e3a1;
+  --term-warn: #f9e2af;
+  --term-err: #f38ba8;
+  --term-link: #89b4fa;
+}
+.terminal[data-theme="macchiato"] {
+  --term-bg: #24273a;
+  --term-fg: #cad3f5;
+  --term-dim: #a5adcb;
+  --term-bright: #c6a0f6;
+  --term-accent: #a6da95;
+  --term-warn: #eed49f;
+  --term-err: #ed8796;
+  --term-link: #8aadf4;
+}
+.terminal[data-theme="frappe"] {
+  --term-bg: #303446;
+  --term-fg: #c6d0f5;
+  --term-dim: #a5adce;
+  --term-bright: #ca9ee6;
+  --term-accent: #a6d189;
+  --term-warn: #e5c890;
+  --term-err: #e78284;
+  --term-link: #8caaee;
+}
+.terminal[data-theme="latte"] {
+  --term-bg: #eff1f5;
+  --term-fg: #4c4f69;
+  --term-dim: #6c6f85;
+  --term-bright: #8839ef;
+  --term-accent: #40a02b;
+  --term-warn: #df8e1d;
+  --term-err: #d20f39;
+  --term-link: #1e66f5;
+}
+/* Catppuccin is a flat palette; drop the phosphor glow so text stays crisp. */
+.terminal[data-theme="mocha"],
+.terminal[data-theme="macchiato"],
+.terminal[data-theme="frappe"],
+.terminal[data-theme="latte"] {
+  text-shadow: none;
+}
+/* Latte is light: dark CRT overlays would muddy it, so lighten them. */
+.terminal[data-theme="latte"]::before {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(76, 79, 105, 0.05) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+}
+.terminal[data-theme="latte"]::after {
+  background: radial-gradient(120% 120% at 50% 50%, transparent 72%, rgba(76, 79, 105, 0.12) 100%);
+}
+
+.terminal {
+  background: var(--term-bg);
+  color: var(--term-fg);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.55;
+  text-shadow: 0 0 4px color-mix(in srgb, var(--term-fg) 45%, transparent);
+}
+
+/* CRT scanlines + vignette, purely decorative and non-interactive */
+.crt::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+}
+.crt::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 21;
+  background: radial-gradient(120% 120% at 50% 50%, transparent 62%, rgba(0, 0, 0, 0.45) 100%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .crt-flicker {
+    animation: crt-flicker 6s infinite steps(60);
+  }
+}
+@keyframes crt-flicker {
+  0%, 96%, 100% { opacity: 1; }
+  97% { opacity: 0.94; }
+  98% { opacity: 0.99; }
+}
+
+/* Blinking block cursor */
+.cursor {
+  display: inline-block;
+  width: 0.6ch;
+  height: 1.05em;
+  translate: 0 0.18em;
+  background: var(--term-accent);
+  box-shadow: 0 0 6px var(--term-accent);
+  animation: blink 1.05s steps(1) infinite;
+}
+.cursor.solid { animation: none; }
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* Semantic colors, so command code stays readable */
+.tx-fg { color: var(--term-fg); }
+.tx-dim { color: var(--term-dim); }
+.tx-bright { color: var(--term-bright); }
+.tx-accent { color: var(--term-accent); }
+.tx-warn { color: var(--term-warn); }
+.tx-err { color: var(--term-err); }
+.tx-link { color: var(--term-link); text-decoration: underline; text-underline-offset: 2px; }
+.tx-link:hover { filter: brightness(1.25); }
+
+/* code-fence syntax highlighting (terminal renderer); themes via the term vars */
+.hl-comment { color: var(--term-dim); font-style: italic; }
+.hl-string { color: var(--term-warn); }
+.hl-keyword { color: var(--term-accent); }
+.hl-number { color: var(--term-bright); }
+.hl-type { color: var(--term-link); }
+.hl-func { color: var(--term-bright); }
+
+/* Terminal scrollbar */
+.term-scroll::-webkit-scrollbar { width: 10px; }
+.term-scroll::-webkit-scrollbar-track { background: transparent; }
+.term-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--term-dim) 60%, transparent);
+  border-radius: 0;
+}
+.term-scroll { scrollbar-width: thin; scrollbar-color: var(--term-dim) transparent; }
+
+/* keep monospace boxes (ascii art, tables, code) from wrapping/collapsing */
+.mono-block {
+  white-space: pre;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+}
+
+/* ASCII art (neofetch logo): use the block-glyph-safe stack, not the pixel font */
+.term-art {
+  font-family: var(--font-art);
+}
+
+/* ---- Shareable /blog reader pages (rendered markdown, terminal-tinted) ---- */
+.reader {
+  background: #06090a;
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+}
+.prose pre {
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+  border: 1px solid #14361f;
+}
+.prose pre code { background: transparent; padding: 0; font-family: var(--font-mono); }
+.prose :not(pre) > code {
+  background: rgb(88 255 155 / 0.08);
+  padding: 0.15em 0.35em;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after { content: none; }
